@@ -1,4 +1,6 @@
 import express from "express";
+import "./db";
+import "./Post";
 
 const app = express();
 
