@@ -16,3 +16,4 @@ export const createPost = ({ title, content, date }: IPost) =>
     date,
   });
 export const getPost = (_id: String) => baseApi.get(`post/${_id}`);
+export const deleteAllPosts = () => baseApi.delete("delete-all");

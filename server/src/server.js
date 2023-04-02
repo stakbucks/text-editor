@@ -29,3 +29,8 @@ app.get(`/post/:id`, async (req, res) => {
   console.log(post);
   return res.send(post);
 });
+
+app.delete(`/delete-all`, async (req, res) => {
+  await Post.deleteMany({});
+  return;
+});
