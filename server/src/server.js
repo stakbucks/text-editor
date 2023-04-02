@@ -21,11 +21,11 @@ app.get("/all-posts", async (req, res) => {
 app.post("/create-post", async (req, res) => {
   const newPost = req.body;
   await Post.create(newPost);
-
   return res.send("success");
 });
 
 app.get(`/post/:id`, async (req, res) => {
   const post = await Post.findById(req.params.id);
+  console.log(post);
   return res.send(post);
 });

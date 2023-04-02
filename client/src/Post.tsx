@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPost, IPost } from "./api/api";
+import * as DOMPurify from "dompurify";
 
 function Post() {
   const [post, setPost] = useState<IPost>();
@@ -10,15 +11,18 @@ function Post() {
   }, []);
 
   return (
-    <>
+    <div>
       <h2>{post?.title}</h2>
-      <tr>
-        <th></th>
-        <td>
-          <pre dangerouslySetInnerHTML={{ __html: String(post?.content) }} />
-        </td>
-      </tr>
-    </>
+      <div
+        style={{
+          width: "60vw",
+          whiteSpace: "normal",
+        }}
+        dangerouslySetInnerHTML={{
+          __html: DOMPurify.sanitize(String(post?.content)),
+        }}
+      />
+    </div>
   );
 }
 export default Post;

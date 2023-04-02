@@ -17,12 +17,12 @@ function Posts() {
       <ul>
         {posts.map((post, index) => (
           <li key={index}>
-            <h3
+            <span
               onClick={() => handleSeePost(post._id)}
               style={{ cursor: "pointer" }}
             >
               {post.title}
-            </h3>
+            </span>
           </li>
         ))}
       </ul>

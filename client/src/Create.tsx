@@ -30,6 +30,7 @@ function Create() {
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
         [{ font: [] }],
         [{ align: [] }],
+
         ["bold", "italic", "underline", "strike", "blockquote"],
         [{ list: "ordered" }, { list: "bullet" }, "link"],
         [
@@ -87,12 +88,15 @@ function Create() {
       <h3>글 작성하기</h3>
       <label htmlFor="title">제목</label>
       <input id="title" type="text" onChange={handleTitleChange} />
-      <ReactQuill
-        theme="snow"
-        value={value}
-        onChange={setValue}
-        modules={modules}
-      />
+      <div>
+        <ReactQuill
+          style={{ width: "1000px", height: "300px", marginBottom: "100px" }}
+          theme="snow"
+          value={value}
+          onChange={setValue}
+          modules={modules}
+        />
+      </div>
       <button onClick={handleSubmit}>제출</button>
     </>
   );
