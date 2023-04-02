@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Create from "./Create";
+import Post from "./Post";
 import Posts from "./Posts";
 
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "create-post",
         element: <Create />,
+      },
+      {
+        path: "post/:id",
+        element: <Post />,
       },
     ],
   },

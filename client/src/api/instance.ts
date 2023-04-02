@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-const BASE_URL = "localhost:4000";
+const BASE_URL = "http://localhost:4000/";
 
 const axiosConfig: AxiosRequestConfig = {
   baseURL: BASE_URL,

@@ -1,10 +1,18 @@
 import { baseApi } from "./instance";
-export const getAllPosts = () => baseApi.get("/all-posts");
 
-// export const signupPost = (signupForm: ISignupForm) =>
-//   baseApi.post(SIGNUP_URI, {
-//     userName: signupForm.name,
-//     userId: signupForm.id,
-//     password: signupForm.password,
-//     userEmail: signupForm.email,
-//   });
+export interface IPost {
+  _id?: String;
+  title: String;
+  content: String;
+  date: Date;
+}
+
+export const getAllPosts = () =>
+  baseApi.get("all-posts").then((res) => res.data);
+export const createPost = ({ title, content, date }: IPost) =>
+  baseApi.post("create-post", {
+    title,
+    content,
+    date,
+  });
+export const getPost = (_id: String) => baseApi.get(`post/${_id}`);

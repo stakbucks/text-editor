@@ -1,10 +1,29 @@
 import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { createPost } from "./api/api";
+import { useNavigate } from "react-router-dom";
 
 function Create() {
+  const navigate = useNavigate();
   const [value, setValue] = useState("");
-  const handleSubmit = () => {};
+  const [titleValue, setTitleValue] = useState<string>("");
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitleValue(e.currentTarget.value);
+  };
+  const handleSubmit = async () => {
+    const date = new Date();
+    try {
+      await createPost({
+        title: titleValue,
+        content: value,
+        date,
+      }).then((res) => console.log(res));
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const modules = {
     toolbar: {
       container: [
@@ -66,13 +85,15 @@ function Create() {
   return (
     <>
       <h3>글 작성하기</h3>
+      <label htmlFor="title">제목</label>
+      <input id="title" type="text" onChange={handleTitleChange} />
       <ReactQuill
         theme="snow"
         value={value}
         onChange={setValue}
         modules={modules}
       />
-      <button>제출</button>
+      <button onClick={handleSubmit}>제출</button>
     </>
   );
 }
