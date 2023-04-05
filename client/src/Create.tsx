@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ReactQuill, { Quill } from "react-quill";
-import ImageResize from "quill-image-resize";
+import ImageResize from "quill-image-resize-module";
 import "react-quill/dist/quill.snow.css";
 import { createPost } from "./api/api";
 import { useNavigate } from "react-router-dom";
