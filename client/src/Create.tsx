@@ -1,11 +1,12 @@
 import { useState } from "react";
-import ReactQuill, { Quill } from "react-quill";
-import ImageResize from "quill-image-resize-module";
+import ReactQuill from "react-quill";
+import Quill from "quill";
+import { ImageResize } from "quill-image-resize-module-ts";
 import "react-quill/dist/quill.snow.css";
 import { createPost } from "./api/api";
 import { useNavigate } from "react-router-dom";
 
-Quill.register("modules/ImageResize", ImageResize);
+Quill.register("modules/imageResize", ImageResize);
 
 const modules = {
   toolbar: {
@@ -62,8 +63,19 @@ const modules = {
       ["image", "video"],
       ["clean"],
     ],
-    ImageResize: {
-      parchment: Quill.import("parchment"),
+  },
+  imageResize: {
+    parchment: Quill.import("parchment"),
+    toolbarStyles: {
+      backgroundColor: "black",
+      border: "none",
+      // other camelCase styles for size display
+    },
+    toolbarButtonStyles: {
+      // ...
+    },
+    toolbarButtonSvgStyles: {
+      // ...
     },
   },
 };
