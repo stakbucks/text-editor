@@ -32,8 +32,8 @@ function Create() {
     }
   };
 
-  const updateTextDescription = async (state: any) => {
-    await setEditorState(state);
+  const updateTextDescription = (state: any) => {
+    setEditorState(state);
     const html = draftjsToHtml(convertToRaw(editorState.getCurrentContent()));
     setHtmlString(html);
   };
@@ -51,6 +51,8 @@ function Create() {
       <input id="title" type="text" onChange={handleTitleChange} />
       <div>
         <Editor
+          wrapperClassName="wrapper-class"
+          toolbarClassName="toolbar-class"
           placeholder="게시글을 작성해주세요"
           editorState={editorState}
           onEditorStateChange={updateTextDescription}
