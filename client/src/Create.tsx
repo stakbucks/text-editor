@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import Quill from "quill";
 import { ImageResize } from "quill-image-resize-module-ts";
@@ -57,6 +57,9 @@ const modules = {
             "#3d1466",
             "custom-color",
           ],
+          handlers: {
+            image: imageHandler,
+          },
         },
         { background: [] },
       ],
@@ -64,23 +67,11 @@ const modules = {
       ["clean"],
     ],
   },
-  imageResize: {
-    parchment: Quill.import("parchment"),
-    toolbarStyles: {
-      backgroundColor: "black",
-      border: "none",
-      // other camelCase styles for size display
-    },
-    toolbarButtonStyles: {
-      // ...
-    },
-    toolbarButtonSvgStyles: {
-      // ...
-    },
-  },
+  imageResize: {},
 };
 
 function Create() {
+  const quillRef = useRef();
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [titleValue, setTitleValue] = useState<string>("");
@@ -101,6 +92,28 @@ function Create() {
       console.log(error);
     }
   };
+  const imageHandler = () => {
+    const input = document.createElement('input');
+
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    document.body.appendChild(input);
+    
+    input.click();
+  
+    input.onchange = async () => {
+      const [file] = input.files;
+      
+      // S3 Presigned URL로 업로드하고 image url 받아오기
+      const { preSignedPutUrl: presignedURL, readObjectUrl: imageURL } = (await getS3PresignedURL(file.name)).data;
+      await uploadImage(presignedURL, file);
+      
+      // 현재 커서 위치에 이미지를 삽입하고 커서 위치를 +1 하기
+      const range = quillRef.current.getEditorSelection();
+      quillRef.current.getEditor().insertEmbed(range.index, 'image', imageURL)
+      quillRef.current.getEditor().setSelection(range.index + 1);
+      document.body.querySelector(':scope > input').remove()
+    };
 
   //여기에 에디터 넣을 예정
   console.log(value);
@@ -111,7 +124,8 @@ function Create() {
       <input id="title" type="text" onChange={handleTitleChange} />
       <div>
         <ReactQuill
-          style={{ width: "1000px", height: "300px", marginBottom: "100px" }}
+          ref={quillRef}
+          style={{ width: "1200px", height: "1300px", marginBottom: "100px" }}
           theme="snow"
           value={value}
           onChange={setValue}
