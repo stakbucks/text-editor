@@ -80,7 +80,6 @@ function Create() {
   };
   const handleSubmit = async () => {
     const date = new Date();
-    if (!titleValue.length) return alert("제목을 입력해주세요!");
     try {
       await createPost({
         title: titleValue,
